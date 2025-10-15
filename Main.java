@@ -1,8 +1,20 @@
 import java.util.Arrays;
 import java.util.Objects;
 
+/**
+ * Demonstrates creation, sorting, and searching of an array of Airplane objects.
+ * Sorting is done by model in ascending order and capacity in descending order.
+ * After sorting, a target Airplane can be located in the array using equals().
+ */
 public class Main {
 
+    /**
+     * Entry point of the program.
+     * Initializes an array of Airplane objects, sorts them, prints the sorted array,
+     * and searches for a target Airplane.
+     *
+     * @param args command-line arguments (not used)
+     */
     public static void main(String[] args) {
         Airplane[] planes = {
             new Airplane("Boeing", 180, 900, 5000, 40000),
@@ -30,6 +42,11 @@ public class Main {
         }
     }
 
+    /**
+     * Prints a formatted table of Airplane objects.
+     *
+     * @param planes the array of Airplane objects to print
+     */
     private static void printPlanes(Airplane[] planes) {
         System.out.printf("%-10s %8s %10s %8s %10s%n", "Model", "Capacity", "MaxSpeed", "Range", "Weight");
         System.out.println("---------------------------------------------------------------");
@@ -39,6 +56,13 @@ public class Main {
         }
     }
 
+    /**
+     * Searches for a target Airplane in an array using equals().
+     *
+     * @param planes the array of Airplane objects to search
+     * @param target the Airplane object to find
+     * @return the index of the target Airplane in the array, or -1 if not found
+     */
     private static int findAirplane(Airplane[] planes, Airplane target) {
         for (int i = 0; i < planes.length; i++) {
             if (planes[i].equals(target)) {
@@ -49,6 +73,11 @@ public class Main {
     }
 }
 
+/**
+ * Represents an airplane with model, capacity, maximum speed, range, and weight.
+ * Implements Comparable to allow sorting by model (ascending) and capacity (descending),
+ * then by remaining fields in ascending order.
+ */
 class Airplane implements Comparable<Airplane> {
     String model;
     int capacity;
@@ -56,6 +85,15 @@ class Airplane implements Comparable<Airplane> {
     int range;
     double weight;
 
+    /**
+     * Constructs an Airplane object with all fields initialized.
+     *
+     * @param model    the airplane model
+     * @param capacity passenger capacity
+     * @param maxSpeed maximum speed in km/h
+     * @param range    flight range in km
+     * @param weight   weight in kg
+     */
     public Airplane(String model, int capacity, double maxSpeed, int range, double weight) {
         this.model = model;
         this.capacity = capacity;
@@ -64,6 +102,15 @@ class Airplane implements Comparable<Airplane> {
         this.weight = weight;
     }
 
+    /**
+     * Compares this Airplane with another for sorting.
+     * Primary sort: model (ascending)
+     * Secondary sort: capacity (descending)
+     * Remaining fields: maxSpeed, range, weight (ascending)
+     *
+     * @param other the other Airplane to compare to
+     * @return negative if this < other, zero if equal, positive if this > other
+     */
     @Override
     public int compareTo(Airplane other) {
         int cmp = this.model.compareTo(other.model);
@@ -77,6 +124,12 @@ class Airplane implements Comparable<Airplane> {
         return Double.compare(this.weight, other.weight);
     }
 
+    /**
+     * Checks equality based on all fields.
+     *
+     * @param o the object to compare
+     * @return true if all fields are equal, false otherwise
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -89,11 +142,21 @@ class Airplane implements Comparable<Airplane> {
                Objects.equals(model, airplane.model);
     }
 
+    /**
+     * Returns a hash code based on all fields.
+     *
+     * @return the hash code
+     */
     @Override
     public int hashCode() {
         return Objects.hash(model, capacity, maxSpeed, range, weight);
     }
 
+    /**
+     * Returns a formatted string representation of the airplane.
+     *
+     * @return formatted string with all fields
+     */
     @Override
     public String toString() {
         return String.format("%-10s %8d %10.0f %8d %10.0f",
